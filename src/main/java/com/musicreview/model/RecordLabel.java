@@ -1,9 +1,4 @@
 package com.musicreview.model;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.*;
 import java.util.Set;
 

@@ -2,7 +2,7 @@ package com.musicreview.service.impl;
 
 import com.musicreview.model.CustomUser;
 import com.musicreview.service.UserService;
-import lombok.NoArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@NoArgsConstructor(force = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserService userService;

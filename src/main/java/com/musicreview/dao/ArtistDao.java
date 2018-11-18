@@ -11,7 +11,7 @@ public interface  ArtistDao {
 
     void save(Artist artist);
 
-
+     Artist findById(long id);
     void delete(Long id);
 
     List<Artist> findAll();

@@ -61,6 +61,6 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public MusicRelease findMusicRelease(long id) {
-        return musicReleaseRepository.findOne(1L);
+        return musicReleaseRepository.findById(id);
     }
 }

@@ -1,12 +1,14 @@
 package com.musicreview.service.impl;
 
+import com.musicreview.dao.ArtistDao;
+import com.musicreview.dao.RecordLabelDao;
 import com.musicreview.model.Artist;
 import com.musicreview.model.RecordLabel;
 import com.musicreview.service.RecordLabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,12 +17,12 @@ import java.util.Set;
 @Service
 public class RecordLabelServiceImpl implements RecordLabelService {
 
-    private final RecordLabelRepository recordLabelRepository;
+    private final RecordLabelDao recordLabelRepository;
 
-    private final ArtistRepository artistRepository;
+    private final ArtistDao artistRepository;
 
     @Autowired
-    public RecordLabelServiceImpl(RecordLabelRepository recordLabelRepository, ArtistRepository artistRepository) {
+    public RecordLabelServiceImpl(RecordLabelDao recordLabelRepository, ArtistDao artistRepository) {
         this.recordLabelRepository = recordLabelRepository;
         this.artistRepository = artistRepository;
     }
@@ -32,14 +34,14 @@ public class RecordLabelServiceImpl implements RecordLabelService {
 
     @Override
     public boolean existsRecordLabelByName(String label_name) {
-        return recordLabelRepository.existsByRecordLabelName(label_name);
+        return recordLabelRepository.existsRecordLabelByName(label_name);
     }
 
     @Override
     @Transactional
     public void addRecordLabel(RecordLabel recordLabel) {
         Set<Artist> artistSet = new HashSet<>();
-        artistSet.add(artistRepository.getOne(1L));
+        artistSet.add(artistRepository.findById(1));
         recordLabel.setArtistsList(artistSet);
         recordLabelRepository.save(recordLabel);
     }

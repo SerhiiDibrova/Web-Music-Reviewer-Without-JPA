@@ -27,7 +27,7 @@ public class CustomUser {
     @Column (name = "email")
     private String email;
 
-
+    public CustomUser(){}
     public CustomUser(String login, String password, UserRole role, String firstName, String secondName, String email) {
         this.login = login;
         this.password = password;

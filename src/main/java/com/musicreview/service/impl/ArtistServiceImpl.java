@@ -7,15 +7,15 @@ import com.musicreview.model.RecordLabel;
 import com.musicreview.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
 @Service
-public class ArtistServiceImpl implements ArtistService {
+public abstract class ArtistServiceImpl implements ArtistService {
 
     private final ArtistDao artistRepository;
 
@@ -28,13 +28,13 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Artist getArtistByNickname(String nickname) {
         return artistRepository.findByNickname(nickname);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public boolean existsByNickname(String nickname) {
         return artistRepository.existsByNickname(nickname);
     }
@@ -43,7 +43,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Transactional
     public void addArtist(Artist artist) {
         Set <RecordLabel> recordLabels = new HashSet<>();
-        recordLabels.add(recordLabelRepository.getOne(1L));
+        recordLabels.add(recordLabelRepository.findById(1));
         artist.setRecordLabels(recordLabels);
         artistRepository.save(artist);
     }
@@ -68,6 +68,6 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public RecordLabel findRecordLabel(long id) {
-        return recordLabelRepository.getOne(id);
+        return recordLabelRepository.findById(id);
     }
 }

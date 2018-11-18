@@ -31,7 +31,7 @@ public class Artist {
     @JoinTable (name = "artist_musicrelease", joinColumns = @JoinColumn (name = "artist_id"),
     inverseJoinColumns = @JoinColumn (name = "musicrelease_id"))
     private Set <MusicRelease> musicReleaseSet;
-  
+  public Artist(){}
     public Artist(String artist_firstname, String artist_secondname, String artist_nickname) {
         this.artist_firstname = artist_firstname;
         this.artist_secondname = artist_secondname;

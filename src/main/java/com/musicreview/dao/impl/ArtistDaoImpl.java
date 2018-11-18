@@ -3,6 +3,7 @@ package com.musicreview.dao.impl;
 import com.musicreview.dao.ArtistDao;
 import com.musicreview.model.Artist;
 import com.musicreview.model.RecordLabel;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,15 +16,26 @@ public class ArtistDaoImpl implements ArtistDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-//TO-DO <------------------
     @Override
     public boolean existsByNickname(String nickname) {
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "select count(*) from Artist a where a.artist_nickname = :artist_nickname");
+        query.setString("artist_nickname", nickname);
+        Long count = (Long)query.uniqueResult();
+
+        if(count>0) return true;
         return false;
     }
 
     @Override
     public void save(Artist artist) {
         sessionFactory.getCurrentSession().save(artist);
+    }
+
+    @Override
+    public Artist findById(long id) {
+        Artist artist = (Artist) sessionFactory.getCurrentSession().get(Artist.class, id);
+        return artist;
     }
 
     @Override

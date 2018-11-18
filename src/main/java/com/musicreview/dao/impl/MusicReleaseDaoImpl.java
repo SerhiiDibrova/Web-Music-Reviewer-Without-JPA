@@ -2,6 +2,7 @@ package com.musicreview.dao.impl;
 
 import com.musicreview.dao.MusicReleaseDao;
 import com.musicreview.model.MusicRelease;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,9 +19,22 @@ public class MusicReleaseDaoImpl implements MusicReleaseDao {
         MusicRelease musicRelease = (MusicRelease) sessionFactory.getCurrentSession().get(MusicRelease.class, release_title);
         return musicRelease;
     }
-//TO-DO<------
+
     @Override
-    public boolean existsMusicReleaseByTitle(String release_title) {
+    public MusicRelease findById(long id) {
+        MusicRelease musicRelease = (MusicRelease) sessionFactory.getCurrentSession().get(MusicRelease.class, id);
+        return musicRelease;
+    }
+
+    @Override
+    public boolean existsMusicReleaseByTitle(String release_title)
+    {
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "select count(*) from MusicRelease m where m.release_title = :release_title");
+        query.setString("release_title", release_title);
+        Long count = (Long)query.uniqueResult();
+
+        if(count>0) return true;
         return false;
     }
 
